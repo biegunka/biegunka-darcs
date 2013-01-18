@@ -56,7 +56,7 @@ updateDarcs url path = do
   exists ← doesDirectoryExist path
   handle check $ if exists
     then -- pull
-      withCurrentDirectory path $ commandCommand pull [F.Quiet] [url]
+      withCurrentDirectory path $ commandCommand pull [F.Quiet, F.All] [url]
     else -- get
       withCurrentDirectory parent_path $ commandCommand get [F.Quiet] [url]
  where
