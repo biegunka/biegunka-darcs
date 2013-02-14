@@ -37,7 +37,7 @@ import Biegunka.Source.Dummy (sourceFailure)
 --
 -- * link ${HOME}\/darcs\/repository\/important.file to ${HOME}\/.config
 darcs ∷ String → FilePath → Script Files → Script Sources
-darcs url path script = liftF $ S url path script (updateDarcs url) ()
+darcs url path script = liftF $ S "darcs" url path script (updateDarcs url) ()
 
 
 -- | Clone repository from the given url to specified path
