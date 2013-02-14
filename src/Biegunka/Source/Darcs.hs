@@ -20,7 +20,7 @@ import qualified Darcs.Flags as F
 import           Darcs.Utils (withCurrentDirectory)
 
 
-import Biegunka.Language (Command (S), Layer (Files, Source), Script)
+import Biegunka.Language (Command (S), Layer (Files, Sources), Script)
 import Biegunka.Source.Dummy (sourceFailure)
 
 
@@ -36,7 +36,7 @@ import Biegunka.Source.Dummy (sourceFailure)
 -- * link ${HOME}\/darcs\/repository to ${HOME}\/some\/not\/so\/long\/path
 --
 -- * link ${HOME}\/darcs\/repository\/important.file to ${HOME}\/.config
-darcs ∷ String → FilePath → Script Files → Script Source
+darcs ∷ String → FilePath → Script Files → Script Sources
 darcs url path script = liftF $ S url path script (updateDarcs url) ()
 
 
@@ -45,7 +45,7 @@ darcs url path script = liftF $ S url path script (updateDarcs url) ()
 -- > darcs_ "https://example.com/repository" "darcs/repository"
 --
 -- * get repository from https:\/\/example.com\/repository to ${HOME}\/darcs\/repository
-darcs_ ∷ String → FilePath → Script Source
+darcs_ ∷ String → FilePath → Script Sources
 darcs_ url path = darcs url path (return ())
 
 
