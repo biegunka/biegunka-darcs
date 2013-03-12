@@ -21,7 +21,7 @@ import           Darcs.Utils (withCurrentDirectory)
 
 
 import Biegunka.Language (Command (S), Layer (Files, Sources), Script)
-import Biegunka.Source.Dummy (sourceFailure)
+import Biegunka.Execution.Exception
 
 
 -- | Clone repository from the given url to specified path and/or pull.
