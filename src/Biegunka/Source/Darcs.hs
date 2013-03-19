@@ -20,7 +20,7 @@ import qualified Darcs.Flags as F
 import           Darcs.Utils (withCurrentDirectory)
 
 
-import Biegunka.Language (Command (S), Layer (Files, Sources), Script)
+import Biegunka.Language
 import Biegunka.Execute.Exception
 
 
@@ -36,8 +36,8 @@ import Biegunka.Execute.Exception
 -- * link ${HOME}\/darcs\/repository to ${HOME}\/some\/not\/so\/long\/path
 --
 -- * link ${HOME}\/darcs\/repository\/important.file to ${HOME}\/.config
-darcs ∷ String → FilePath → Script Files → Script Sources
-darcs url path script = liftF $ S "darcs" url path script (updateDarcs url) ()
+darcs ∷ String → FilePath → Script Actions → Script Sources
+darcs url path script = liftF $ ES "darcs" url path script (updateDarcs url) ()
 
 
 -- | Clone repository from the given url to specified path
