@@ -56,7 +56,7 @@ updateDarcs url path = do
     then -- pull
       withCurrentDirectory path $ commandCommand pull [F.Quiet, F.All] [url]
     else -- get
-      withCurrentDirectory parent_path $ commandCommand get [F.Quiet] [url]
+      withCurrentDirectory parent_path $ commandCommand get [F.Quiet] [url,path]
  where
 
   parent_path = takeDirectory path
