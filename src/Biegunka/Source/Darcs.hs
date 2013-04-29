@@ -8,7 +8,6 @@ module Biegunka.Source.Darcs
 
 import Control.Exception (SomeException (..), fromException, handle)
 import System.Exit (ExitCode (..))
-import Control.Monad.Free    (liftF)
 import Data.Text             (pack)
 import System.Directory      (doesDirectoryExist)
 import System.FilePath.Posix (takeDirectory)
@@ -36,8 +35,9 @@ import Biegunka.Execute.Exception
 -- * link ${HOME}\/darcs\/repository to ${HOME}\/some\/not\/so\/long\/path
 --
 -- * link ${HOME}\/darcs\/repository\/important.file to ${HOME}\/.config
-darcs ∷ String → FilePath → Script Actions → Script Sources
-darcs url path script = liftF $ ES "darcs" url path script (updateDarcs url) ()
+darcs ∷ String → FilePath → Script Actions () → Script Sources ()
+darcs url path script = lift $ ES "darcs" url path script (updateDarcs url) ()
+{-# INLINE darcs #-}
 
 
 -- | Clone repository from the given url to specified path
@@ -45,8 +45,9 @@ darcs url path script = liftF $ ES "darcs" url path script (updateDarcs url) ()
 -- > darcs_ "https://example.com/repository" "darcs/repository"
 --
 -- * get repository from https:\/\/example.com\/repository to ${HOME}\/darcs\/repository
-darcs_ ∷ String → FilePath → Script Sources
+darcs_ ∷ String → FilePath → Script Sources ()
 darcs_ url path = darcs url path (return ())
+{-# INLINE darcs_ #-}
 
 
 updateDarcs ∷ String → FilePath → IO ()
