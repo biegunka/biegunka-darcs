@@ -1,5 +1,4 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE UnicodeSyntax #-}
 -- | Biegunka.Source.Darcs - functions to work with darcs repositories as sources
 module Biegunka.Source.Darcs
   ( -- * Source layer
@@ -36,7 +35,7 @@ import Biegunka.Execute.Exception
 -- * link ${HOME}\/darcs\/repository to ${HOME}\/some\/not\/so\/long\/path
 --
 -- * link ${HOME}\/darcs\/repository\/important.file to ${HOME}\/.config
-darcs ∷ String → FilePath → Script Actions () → Script Sources ()
+darcs :: String -> FilePath -> Script Actions () -> Script Sources ()
 darcs url path script = sourced "darcs" url path script (updateDarcs url)
 {-# INLINE darcs #-}
 
@@ -46,14 +45,14 @@ darcs url path script = sourced "darcs" url path script (updateDarcs url)
 -- > darcs_ "https://example.com/repository" "darcs/repository"
 --
 -- * get repository from https:\/\/example.com\/repository to ${HOME}\/darcs\/repository
-darcs_ ∷ String → FilePath → Script Sources ()
+darcs_ :: String -> FilePath -> Script Sources ()
 darcs_ url path = darcs url path (return ())
 {-# INLINE darcs_ #-}
 
 
-updateDarcs ∷ String → FilePath → IO ()
+updateDarcs :: String -> FilePath -> IO ()
 updateDarcs url path = do
-  exists ← doesDirectoryExist path
+  exists <- doesDirectoryExist path
   handle check $ if exists
     then -- pull
       withCurrentDirectory path $ commandCommand pull [F.Quiet, F.All] [url]
@@ -63,11 +62,11 @@ updateDarcs url path = do
 
   parent_path = takeDirectory path
 
-  check ∷ SomeException → IO ()
+  check :: SomeException -> IO ()
   check e =
-    case fromException e ∷ Maybe ExitCode of
-      Just ExitSuccess → return ()
-      Just _ → f
-      Nothing → f
+    case fromException e :: Maybe ExitCode of
+      Just ExitSuccess -> return ()
+      Just _ -> f
+      Nothing -> f
    where
     f = sourceFailure url path $ pack $ show e
