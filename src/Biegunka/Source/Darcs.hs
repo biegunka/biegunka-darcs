@@ -20,6 +20,7 @@ import           Darcs.Utils (withCurrentDirectory)
 
 
 import Biegunka.Language
+import Biegunka.Script (Script, sourced)
 import Biegunka.Execute.Exception
 
 
@@ -36,7 +37,7 @@ import Biegunka.Execute.Exception
 --
 -- * link ${HOME}\/darcs\/repository\/important.file to ${HOME}\/.config
 darcs ∷ String → FilePath → Script Actions () → Script Sources ()
-darcs url path script = lift $ ES (Source "darcs" url path (updateDarcs url)) script ()
+darcs url path script = sourced "darcs" url path script (updateDarcs url)
 {-# INLINE darcs #-}
 
 
