@@ -5,22 +5,21 @@ module Biegunka.Source.Darcs
     darcs, darcs_
   ) where
 
-import Control.Exception (SomeException (..), fromException, handle)
-import System.Exit (ExitCode (..))
-import Data.Text             (pack)
-import System.Directory      (doesDirectoryExist)
-import System.FilePath.Posix (takeDirectory)
+import           Control.Exception                  (SomeException (..), fromException, handle)
+import           Data.Text                          (pack)
+import           System.Directory                   (doesDirectoryExist)
+import           System.Exit                        (ExitCode (..))
+import           System.FilePath.Posix              (takeDirectory)
 
-import           Darcs.Commands (DarcsCommand (commandCommand))
-import           Darcs.Commands.Get (get)
-import           Darcs.Commands.Pull (pull)
-import qualified Darcs.Flags as F
-import           Darcs.Utils (withCurrentDirectory)
+import           Darcs.Commands                     (DarcsCommand (commandCommand))
+import           Darcs.Commands.Get                 (get)
+import           Darcs.Commands.Pull                (pull)
+import qualified Darcs.Flags                        as F
+import           Darcs.Utils                        (withCurrentDirectory)
 
-
-import Biegunka.Language
-import Biegunka.Script (Script, sourced)
-import Biegunka.Execute.Exception
+import           Control.Biegunka.Execute.Exception
+import           Control.Biegunka.Language
+import           Control.Biegunka.Script            (Script, sourced)
 
 
 -- | Clone repository from the given url to specified path and/or pull.
